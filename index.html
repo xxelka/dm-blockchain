@@ -19,8 +19,8 @@
             if (window.web3) {
                 window.web3 = new Web3(web3.currentProvider);
                 //  start()
-               // getLastBlocks()
-               sendTransaction();
+                getLastBlocks()
+                // sendTransaction();
             } else {
                 alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
             }
@@ -53,13 +53,14 @@
                         if (err) {
                             return
                         }
-                     
+
                         document.querySelector('.last-block').textContent = `#${block.number} (${block.hash})`;
 
-                       web3.eth.getTransaction(block.hash, (err, details) => {
-                           debugger;
-                        console.log(details);
-                       });                        
+                        if (block.transactions.length > 0) {
+                            web3.eth.getTransaction(block.transactions[0], (err, details) => {
+                                console.log(details);
+                            });
+                        }
                     });
                 }
 
@@ -67,11 +68,11 @@
         }
 
 
-            function sendTransaction() {
-                var transaction = {'to': '0x608f2e400acd5c0a61ffecadc8f7c0c2f686b20d', 'from': '0xd9F7bEc21615bA7a5dC50ff42cA50A6894Db7DE5', 'value': 2 * Math.pow(10, 18)};
-                web3.eth.sendTransaction(transaction, (err, sc) => {
-                    debugger;
-                });   
+        function sendTransaction() {
+            var transaction = { 'to': '0x608f2e400acd5c0a61ffecadc8f7c0c2f686b20d', 'from': '0xd9F7bEc21615bA7a5dC50ff42cA50A6894Db7DE5', 'value': 2 * Math.pow(10, 18) };
+            web3.eth.sendTransaction(transaction, (err, sc) => {
+                debugger;
+            });
         }
 
     </script>
