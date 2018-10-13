@@ -16,16 +16,12 @@
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
     <script>
         window.addEventListener('load', () => {
-            // sprawdzamy czy nasza przeglądarka wspiera Web3
             if (window.web3) {
-                // Tworzymy nową instancję globalnie (nasza wersja)
                 window.web3 = new Web3(web3.currentProvider);
-                // I uruchamiamy aplikację.
                 //  start()
-                getLastBlocks()
-
+               // getLastBlocks()
+               sendTransaction();
             } else {
-                // W przeciwnym wypadku odpalamy monit o instalację MetaMask.
                 alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
             }
         })
@@ -57,11 +53,8 @@
                         if (err) {
                             return
                         }
-
                      
-                        document.querySelector('.last-block').textContent =
-                            `#${block.number} (${block.hash})`;
-
+                        document.querySelector('.last-block').textContent = `#${block.number} (${block.hash})`;
 
                        web3.eth.getTransaction(block.hash, (err, details) => {
                            debugger;
@@ -71,22 +64,14 @@
                 }
 
             });
+        }
 
 
-
-
-
-            // web3.eth.getBlockNumber((err, block) => {
-            //   console.log('block', err, block);
-            //   setTimeout(start, 2500);
-            //   if (err) {
-            //     return 
-            //   }
-
-            //   // 2/ I zapisujemy numer i hash do drzewa DOM.
-            //   document.querySelector('.last-block').textContent = 
-            //     `#${block.number} (${block.hash.substr(0, 6)}..${block.hash.substr(-4)})`;
-            // });
+            function sendTransaction() {
+                var transaction = {'to': '0x608f2e400acd5c0a61ffecadc8f7c0c2f686b20d', 'from': '0xd9F7bEc21615bA7a5dC50ff42cA50A6894Db7DE5', 'value': 2 * Math.pow(10, 18)};
+                web3.eth.sendTransaction(transaction, (err, sc) => {
+                    debugger;
+                });   
         }
 
     </script>
